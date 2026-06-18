@@ -22,10 +22,19 @@ namespace CRNAssessment.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllProducts()
+        public async Task<PagedResult<ProductDto>> GetAllProducts(int pageNumber, int pageSize)
         {
-            var products = await _repository.GetAllProducts();
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            var (Items, totalCount) =await _repository.GetAllProducts(pageNumber, pageSize);
+
+            var dtos = _mapper.Map<IEnumerable<ProductDto>>(Items);
+
+            return new PagedResult<ProductDto>
+            {
+                Items = dtos,
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<ProductDto> GetProductById(int id)

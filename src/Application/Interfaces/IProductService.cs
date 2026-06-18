@@ -9,7 +9,7 @@ namespace CRNAssessment.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductDto>> GetAllProducts();
+        Task<PagedResult<ProductDto>> GetAllProducts(int pageNumber, int pageSize);
         Task<ProductDto> GetProductById(int id);
         Task<ProductDto> CreateProduct(CreateProductDto productDto, string createdBy);
         Task UpdateProduct(UpdateProductDto productDto, string modifiedBy);
