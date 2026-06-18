@@ -1,4 +1,31 @@
+using CRNAssessment.Application.Interfaces;
+using CRNAssessment.Application.Mapping;
+using CRNAssessment.Application.Services;
+using CRNAssessment.Infrastructure.Data;
+using CRNAssessment.Infrastructure.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+// register database
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//register repositories and services
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+//register automapper
+builder.Services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
+
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 
