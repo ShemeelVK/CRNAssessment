@@ -20,9 +20,9 @@ namespace CRNAssessment.API.Controllers
 
         //get all products
         [HttpGet("GetAllProducts")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
         {
-            var products = await _productService.GetAllProducts();
+            var products = await _productService.GetAllProducts(query.PageNumber,query.PageSize);
             return Ok(products);
         }
 

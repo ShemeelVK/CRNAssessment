@@ -9,7 +9,7 @@ namespace CRNAssessment.Application.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllProducts();
+        Task<(IEnumerable<Product> items,int total)> GetAllProducts(int pageNumber, int pageSize);
         Task<Product> GetProductByIdAsync(int id);
         Task<Product> AddProduct(Product product);
         Task UpdateProduct(Product product);

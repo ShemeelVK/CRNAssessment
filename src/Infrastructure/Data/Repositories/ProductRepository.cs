@@ -17,12 +17,17 @@ namespace CRNAssessment.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<(IEnumerable<Product>items,int total)> GetAllProducts(int pageNumber, int pageSize)
         {
-            return await _context.Products
-                .Include(p => p.Items)
-                .AsNoTracking()
-                .ToListAsync();
+          var totalCount=await _context.Products.CountAsync();
+
+            var items = await _context.Products
+               .Include(p => p.Items)
+               .AsNoTracking()
+               .Skip((pageNumber - 1) * pageSize)
+               .Take(pageSize)
+               .ToListAsync();
+            return (items, totalCount);
         }
         public async Task<Product?> GetProductByIdAsync(int id)
         {
