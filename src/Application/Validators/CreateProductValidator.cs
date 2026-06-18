@@ -14,7 +14,7 @@ namespace CRNAssessment.Application.Validators
         {
             RuleFor(x => x.ProductName)
                 .NotEmpty().WithMessage("Product Name is required")
-                .MaximumLength(100).WithMessage("Product name cannot exceed 100 characters");
+                .MaximumLength(255).WithMessage("Product name cannot exceed 255 characters");
 
             RuleForEach(x => x.Items).SetValidator(new CreateItemValidator());
 

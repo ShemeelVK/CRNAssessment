@@ -12,7 +12,7 @@ namespace CRNAssessment.Application.Interfaces
         Task<IEnumerable<Product>> GetAllProducts();
         Task<Product> GetProductByIdAsync(int id);
         Task<Product> AddProduct(Product product);
-        Task<Product> UpdateProduct(Product product);
-        Task<Product> DeleteProduct(Product product);
+        Task UpdateProduct(Product product);
+        Task DeleteProduct(Product product);
     }
 }
