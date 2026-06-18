@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,7 @@ namespace CRNAssessment.Infrastructure.Data.Repositories
         {
             return await _context.Products
                 .Include(p => p.Items)
+                .AsNoTracking()
                 .ToListAsync();
         }
         public async Task<Product?> GetProductByIdAsync(int id)

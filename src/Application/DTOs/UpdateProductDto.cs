@@ -9,8 +9,8 @@ namespace CRNAssessment.Application.DTOs
     public class UpdateProductDto
     {
         public int Id {  get; set; }
-        public string ProductName { get; set; }
-        public List<UpdateItemDto> Items { get; set; }
+        public string ProductName { get; set; }=string.Empty;
+        public List<UpdateItemDto> Items { get; set; } = new List<UpdateItemDto>();
     }
     public class UpdateItemDto
     {
