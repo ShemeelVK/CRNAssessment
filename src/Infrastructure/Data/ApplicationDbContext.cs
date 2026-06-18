@@ -17,6 +17,7 @@ namespace CRNAssessment.Infrastructure.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
