@@ -12,7 +12,7 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductDto>
 
         RuleFor(x => x.ProductName)
             .NotEmpty().WithMessage("Product Name is required.")
-            .MaximumLength(100).WithMessage("Product Name cannot exceed 100 characters.");
+            .MaximumLength(255).WithMessage("Product Name cannot exceed 255 characters.");
 
         RuleForEach(x => x.Items).SetValidator(new UpdateItemValidator());
     }
