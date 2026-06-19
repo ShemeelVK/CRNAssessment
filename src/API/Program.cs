@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,16 +31,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //register repositories and services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IAuthService, CRNAssessment.Infrastructure.Services.AuthService>();
 
 //register automapper
-builder.Services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<ProductMappingProfile>());
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductValidator>();
 
 //JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -91,6 +97,12 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Description = "Enter: Bearer {your token here}"
+    });
+
+    // Make Swagger actually SEND the token (v10+ Syntax)
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
     });
 
 });
