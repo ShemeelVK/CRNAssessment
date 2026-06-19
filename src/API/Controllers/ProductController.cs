@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CRNAssessment.Application.DTOs;
 using CRNAssessment.Application.Interfaces;
@@ -27,7 +27,7 @@ namespace CRNAssessment.API.Controllers
         }
 
         //get by id
-        [HttpGet("GetProductById{id}")]
+        [HttpGet("GetProductById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _productService.GetProductById(id);
@@ -45,7 +45,7 @@ namespace CRNAssessment.API.Controllers
         }
 
         //PUT Product
-        [HttpPut("UpdateProduct{id}")]
+        [HttpPut("UpdateProduct/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDto dto)
         {
@@ -57,7 +57,7 @@ namespace CRNAssessment.API.Controllers
         }
 
         //Delete Product
-        [HttpDelete("DeleteProduct{id}")]
+        [HttpDelete("DeleteProduct/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {

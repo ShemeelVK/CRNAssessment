@@ -84,7 +84,10 @@ builder.Services.AddResponseCompression(options =>
 builder.Services.AddAuthorization();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CRNAssessment.API.Filters.ValidationFilter>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -117,6 +120,13 @@ builder.Services.AddSwaggerGen(options =>
 // Add services to the container.
 
 var app = builder.Build();
+
+// Initialize and Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await CRNAssessment.Infrastructure.Data.DatabaseInitializer.InitializeAsync(services);
+}
 
 // Add Global Exception Handling Middleware
 app.UseMiddleware<CRNAssessment.API.Middleware.ExceptionMiddleware>();
