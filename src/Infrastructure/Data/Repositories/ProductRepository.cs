@@ -24,6 +24,7 @@ namespace CRNAssessment.Infrastructure.Data.Repositories
             var items = await _context.Products
                .Include(p => p.Items)
                .AsNoTracking()
+               .OrderBy(p => p.Id)
                .Skip((pageNumber - 1) * pageSize)
                .Take(pageSize)
                .ToListAsync();

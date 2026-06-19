@@ -12,9 +12,16 @@ using Microsoft.OpenApi;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Serilog configuration
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 // CORS Policy
 builder.Services.AddCors(options =>
@@ -122,6 +129,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseSerilogRequestLogging();
 
 app.UseResponseCompression();
 

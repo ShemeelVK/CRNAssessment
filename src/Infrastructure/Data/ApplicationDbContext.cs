@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,6 +25,11 @@ namespace CRNAssessment.Infrastructure.Data
 
             //applies configurations
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //index for performance optimization
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.ProductName)
+                .HasDatabaseName("IX_Products_ProductName");
         }
 
         
