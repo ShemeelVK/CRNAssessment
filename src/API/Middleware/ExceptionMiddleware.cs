@@ -21,6 +21,10 @@ namespace CRNAssessment.API.Middleware
             {
                 await _next(context);
             }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("The client canceled the request.");
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An unhandled exception occurred: {Message}", ex.Message);
